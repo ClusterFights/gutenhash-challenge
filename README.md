@@ -3,17 +3,16 @@ Find the hashed-string needle in the haystack of text from Project Gutenberg
 
 ## Datasets
 * Big Dataset - 12 GB Gzip archive containing most English TXT files from Project Gutenberg
-  * [Magnet Link](magnet:?xt=urn:btih:992f2d347a182e48a6aa9c5a2bfc39b665b2c469&dn=books.tar.gz)
+  * magnet:?xt=urn:btih:992f2d347a182e48a6aa9c5a2bfc39b665b2c469&dn=books.tar.gz
 * Small Dataset - 680MB ISO containing a smaller subset of eBooks from Project Gutenberg
-  * [Magnet Link](magnet:?xt=urn:btih:35476861704f8088828dd1a0918cc6fee714ac3b&dn=smolbooks.iso)
-Problem Statement {#problem_statement}
------------------
+  * magnet:?xt=urn:btih:35476861704f8088828dd1a0918cc6fee714ac3b&dn=smolbooks.iso
+
+## Problem Statement
 
 Find the substring in the set of books from Project Gutenberg that md5
 hashes to the given hash.
 
-Acquiring and Cleaning the Dataset {#acquiring_and_cleaning_the_dataset}
-----------------------------------
+## Acquiring and Cleaning the Dataset
 
 ### Download the Files from Project Gutenberg {#download_the_files_from_project_gutenberg}
 
@@ -22,7 +21,7 @@ at <https://www.gutenberg.org/ebooks/11220>
 
 `$ wget `[`https://www.gutenberg.org/files/11220/PG2003-08.ISO`](https://www.gutenberg.org/files/11220/PG2003-08.ISO)
 
-### Flatten the Directory Structure {#flatten_the_directory_structure}
+### Flatten the Directory Structure
 
 These next commands will pull all the text files out of their
 directories and place them in the root, and then delete the empty
@@ -32,7 +31,7 @@ directories.
 
 `$ find /local/directory -type d -empty -delete`
 
-### Compress the Files Into a Tarball {#compress_the_files_into_a_tarball}
+### Compress the Files Into a Tarball
 
 `$ tar --remove-files -cvzf archive.tar.gz /local/directory/*.txt`
 
@@ -41,10 +40,9 @@ of GZip) and `pv` installed:
 
 `$ tar --remove-files --use-compress-program="pigz --best --recursive | pv" -cf archive.tar.gz /local/directory/*.txt`
 
-How to Solve {#how_to_solve}
-------------
+## How to Solve
 
-### Hash Generator {#hash_generator}
+### Hash Generator
 
 Choose a 19-character substring from one of the .txt files
 
@@ -60,7 +58,7 @@ Choose a 19-character substring from one of the .txt files
 ` substring: 'blah blah blah blah'`\
 ` hash: d41d8cd98f00b204e9800998ecf8427e`
 
-### Trivial Solution {#trivial_solution}
+### Trivial Solution 
 
 File: gutenhash\_streamer.py
 
@@ -104,10 +102,6 @@ unicode).
 
 Your challenge is to make this performant and parallelizable!
 
-During Competition {#during_competition}
-------------------
+## During Competition
 
 The substring length and file will change during competition.
-
-The hashing algorithm will always be md5sum, and the dataset will always
-be the PG2003-08.ISO file.
